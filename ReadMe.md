@@ -10,6 +10,7 @@ Another of the setup is to get the Aurelia & Node solution set up to run.
 
 Creating the Azure DocumentDB account:
 You will need an Azure account. If you don't have one, there is a free monthly allotment that comes with an MSDN Subscription. If you don't have an MSDN subscription, you can get a one month trial here: https://azure.microsoft.com/en-us/pricing/free-trial/.
+
 Follow the documentation to 
 1)Create a Database Account (https://azure.microsoft.com/en-us/documentation/articles/documentdb-create-account/)
 2) Create a Database (https://azure.microsoft.com/en-us/documentation/articles/documentdb-create-database/)
