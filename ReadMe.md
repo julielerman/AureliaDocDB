@@ -1,11 +1,11 @@
-Aurelia Meets DocumentDB: A Matchmaker’s Journey Part 2
-December 2015 MSDN Magazine Data Points Column
-msdn.microsoft.com/en-us/magazine/mt595750
-by Julie Lerman
+Aurelia Meets DocumentDB: A Matchmaker’s Journey Part 2  
+December 2015 MSDN Magazine Data Points Column  
+msdn.microsoft.com/en-us/magazine/mt595750  
+by Julie Lerman  
 
 This solution needs some TLC before you can use it. It will run on Windows and OSX. I have not tested it out on Linux.
 
-Part is to create the Azure DocumentDB sample database in your Azure account. 
+Part is to create the Azure DocumentDB sample database in your Azure account.   
 Another of the setup is to get the Aurelia & Node solution set up to run.
 
 __Creating the Azure DocumentDB account:__  
