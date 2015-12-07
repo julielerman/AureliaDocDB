@@ -1,4 +1,5 @@
-Aurelia Meets DocumentDB: A Matchmaker’s Journey Part 2  
+Sample Solution to Accompany:  
+__Aurelia Meets DocumentDB: A Matchmaker’s Journey Part 2__  
 December 2015 MSDN Magazine Data Points Column  
 msdn.microsoft.com/en-us/magazine/mt595750  
 by Julie Lerman  
