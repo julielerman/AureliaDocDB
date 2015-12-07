@@ -1,0 +1,19 @@
+ {
+    "id": "1",
+    "Name": "Kacy Catanzaro",
+    "ServedInOniwaban": false,
+    "Clan": "American Ninja Warriors",
+    "Equipment": [
+      {
+        "EquipmentName": "Muscles",
+        "EquipmentType": "Tool"
+      },
+      {
+        "EquipmentName": "Spunk",
+        "EquipmentType": "Tool"
+      }
+    ],
+    "DateOfBirth": "1/14/1990",
+    "DateCreated": "2015-08-10T20:35:09.7600000",
+    "DateModified": "2015-08-10T20:35:09.7600000"
+  }
