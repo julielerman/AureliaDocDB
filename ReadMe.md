@@ -8,7 +8,7 @@ This solution needs some TLC before you can use it. It will run on Windows and O
 Part is to create the Azure DocumentDB sample database in your Azure account. 
 Another of the setup is to get the Aurelia & Node solution set up to run.
 
-Creating the Azure DocumentDB account:
+__Creating the Azure DocumentDB account:__  
 You will need an Azure account. If you don't have one, there is a free monthly allotment that comes with an MSDN Subscription. If you don't have an MSDN subscription, you can get a one month trial here: https://azure.microsoft.com/en-us/pricing/free-trial/.
 
 Follow the documentation to  
@@ -16,25 +16,25 @@ Follow the documentation to
 2) Create a Database (https://azure.microsoft.com/en-us/documentation/articles/documentdb-create-database/)  
 3) Create a Collection (https://azure.microsoft.com/en-us/documentation/articles/documentdb-create-collection/)  
 
+__Modify the code to use the Azure DocumentDB__  
 My configuration expects a database named Ninjas and a collection named Ninjas. But you can modify the config to reflect the names you chose.
 
 4) Modify the config.js file in the root folder of the sample solution (shown below).  
 5) Replace YOURDOCUMENTDBACCOUNTNAME with the name of your account.  
 6) Replace THE MASTER KEY FOR YOUR DOCUMENTDB ACCOUNT with your key which can be found under "All Settings" and then "Keys" in the Azure portal info for your DocumentDB. You'll want the Primary key.  
 
-   ___config.js file contents______  
+   __config.js file contents__  
    var config = {}  
    config.host = process.env.HOST || "https://YOURDOCUMENTDBACCOUNTNAME.documents.azure.com:443/";  
    config.authKey = process.env.AUTH_KEY || "THE MASTER KEY FOR YOUR DOCUMENTDB ACCOUNT";  
    config.databaseId = "Ninjas";  
    config.collectionId = "Ninjas";  
    module.exports = config;  
-   ________________________________  
+    
 
 7) Import the five json documents found in this download. Simple steps for this can be found in the documentation ("Document Explorer navigation options and advanced settings"), under the section "Bulk add documents with Document Explorer".    
-_______________________________________________________________________________
 
-Requirements to run the Aurelia sample:  
+__Requirements to run the Aurelia sample:__  
 1) This requires that Node.JS is installed on your computer. Find that at nodejs.org.  
 2) It also requires Git to be installed on your computer. Find that at git-scm.com.  
 
@@ -58,9 +58,8 @@ Note: jspm install may ask if you want to set up GitHub credentials. Here is why
    (see GitHub Settings > Personal Access Tokens), public_repo access for the token is required.
 I have pre-installed many of the jspm packages however and this should prevent you from reaching the limit. 
 I did this so that you didn't feel forced to create your own github account. 
-_______________________________________________________________________________
 
-Running the app:
+__Running the app:__
 
 Once all of the installs are done, go to the root folder of the solution in CMD and type 
 1) gulp watch
