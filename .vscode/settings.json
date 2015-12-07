@@ -1,0 +1,6 @@
+// Place your settings in this file to overwrite default and user settings.
+{"compilerOptions":{
+		"target": "ES6",
+		"module": "system"		
+	}
+}

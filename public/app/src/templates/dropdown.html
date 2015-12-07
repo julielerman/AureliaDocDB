@@ -1,0 +1,8 @@
+<template>
+<select value.bind="selectedClan">
+   <option repeat.for="clan of clans" model.bind="clan.name">${clan.name}</option>
+
+  </select>
+  
+</template>
+

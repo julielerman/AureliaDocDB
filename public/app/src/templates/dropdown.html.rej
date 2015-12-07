@@ -1,0 +1,9 @@
+diff a/public/app/src/templates/dropdown.html b/public/app/src/templates/dropdown.html	(rejected hunks)
+@@ -1,6 +1,6 @@
+ <template>
+ <select value.bind="selectedClan">
+-   <option repeat.for="clan of clans" value.bind="clan.name">${clan.name}</option>-->
++   <option repeat.for="clan of clans" model.bind="clan.name">${clan.name}</option>
+ 
+   </select>
+   
