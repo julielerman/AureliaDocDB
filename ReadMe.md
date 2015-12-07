@@ -42,13 +42,13 @@ The zip file contains most of what you need but you will need to reinstall some 
 
 In the root folder, run:  
 3) npm install  
-Note: If you see a lot of WARN  and ERR! statements along the way, but the bulk of logging is normal, don't worry about them (like I used to).
+   Note: If you see a lot of WARN  and ERR! statements along the way, but the bulk of logging is normal, don't worry about them (like I used to).
  
 In the public/app folder run these commands one at a time:  
-4)npm install -g  
-5)npm install -g gulp  
-6)npm install -g jspm  
-7)jspm install  
+4) npm install -g  
+5) npm install -g gulp  
+6) npm install -g jspm  
+7) jspm install  
 
 Note: jspm install may ask if you want to set up GitHub credentials. Here is why:  
    jspm queries GitHub to install semver packages, but GitHub has a rate limit on anonymous API requests.
@@ -61,7 +61,7 @@ I did this so that you didn't feel forced to create your own github account.
 
 __Running the app:__
 
-Once all of the installs are done, go to the root folder of the solution in CMD and type 
-1) gulp watch
+Once all of the installs are done, go to the root folder of the solution in CMD and type  
+__gulp watch__
 
 This will build and deploy the source and it will also open up the browser to the default page of the site which is localhost:7000/app. It will be on the Welcome page. Welcome, Github Users and Child Router are part of the skeleton app. The Ninjas option on the menu is what I added.
