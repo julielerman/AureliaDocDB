@@ -3,6 +3,7 @@ __Aurelia Meets DocumentDB: A Matchmaker’s Journey Part 2__
 December 2015 MSDN Magazine Data Points Column  
 msdn.microsoft.com/en-us/magazine/mt595750  
 by Julie Lerman  
+Thanks to Patrick Walters (http://github.com/pwkad) for help with tech review of article and tech support with my sample!
 
 This solution needs some TLC before you can use it. It will run on Windows and OSX. I have not tested it out on Linux.
 
