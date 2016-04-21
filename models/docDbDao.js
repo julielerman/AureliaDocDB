@@ -19,13 +19,13 @@ docDbDao.prototype = {
     init: function (callback) {
         var self = this;
 
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db) {
+        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db,callback) {
             if (err) {
                 callback(err);
 
             } else {
                 self.database = db;
-                docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
+                docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll,callback) {
                     if (err) {
                         callback(err);
 
@@ -40,7 +40,7 @@ docDbDao.prototype = {
     find: function (querySpec, callback) {
         var self = this;
 
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
+        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results,callback) {
             if (err) {
                 callback(err);
 
@@ -56,7 +56,7 @@ docDbDao.prototype = {
         item.date = Date.now();
         item.completed = false;
 
-        self.client.createDocument(self.collection._self, item, function (err, doc) {
+        self.client.createDocument(self.collection._self, item, function (err, doc,callback) {
             if (err) {
                 callback(err);
 
