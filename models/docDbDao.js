@@ -19,18 +19,19 @@ docDbDao.prototype = {
     init: function (callback) {
         var self = this;
 
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db) {
-            if (err) {
-                callback(err);
-
-            } else {
-                self.database = db;
+        docdbUtils.getOrCreateDatabase(self.client, self.databaseId).then(function (db) {
+              self.database = db;
                 docdbUtils.getOrCreateCollection(self.client, sel.database._self, self.collectionId)
                     .then(function (coll) {
                         self.collection = coll;
                     }, function (err) {
                         return err;
                     });
+        },
+         function (err) {
+                        return err;
+                    });
+        
                 // docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
                 //     if (err) {
                 //         callback(err);
