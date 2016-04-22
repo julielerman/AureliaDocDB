@@ -22,9 +22,7 @@ var DocDBUtils = {
     
       
 
-//        client.queryDatabases(querySpec).toArray().then(function(results) {
-            client.queryDatabases(querySpec).then(function(results) {
-      
+      client.queryDatabases(querySpec).toArrayAsync().then(function(results) {
                 if (results.length === 0) {
                     var databaseSpec = {
                         id: databaseId
@@ -59,7 +57,7 @@ var DocDBUtils = {
             }]
         };             
 
-        client.queryCollections(databaseLink, querySpec).toArray().then(function ( results) {
+        client.queryCollections(databaseLink, querySpec).toArrayAsync().then(function ( results) {
                
                 if (results.length === 0) {
                     var collectionSpec = {
