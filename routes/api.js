@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var DocumentDBClient = require('documentdb').DocumentClient;
+//var DocumentDBClient = require('documentdb').DocumentClient;
+var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
+
 var config = require('../config');
 var Ninjas = require('../models/ninjas.js');
 var DocDbDao = require('../models/docDbDao.js');
