@@ -1,4 +1,6 @@
-var DocumentDBClient = require('documentdb').DocumentClient;
+//var DocumentDBClient = require('documentdb').DocumentClient;
+var DocumentClient = require('documentdb-q-promises').DocumentClientWrapper;
+	
 
 var DocDBUtils = {
     
@@ -17,6 +19,8 @@ var DocDBUtils = {
                 value: databaseId
             }]
         };
+    
+      
 
 //        client.queryDatabases(querySpec).toArray().then(function(results) {
             client.queryDatabases(querySpec).then(function(results) {
@@ -26,16 +30,23 @@ var DocDBUtils = {
                         id: databaseId
                     };
 
-                    client.createDatabase(databaseSpec).then(function (created) {
-                        return created;
-                    });
-
-                } else {
-                    //callback(null, results[0]);
-                    return results[0];
-        }},function (err){return err;}
-            
-       );
+                    client.createDatabaseAsync(databaseDefinition)
+    	.then(function(databaseResponse) {
+        	database = databaseResponse.resource;
+        	return client.createCollectionAsync(database._self, collectionDefinition);
+    	})
+    	.then(function(collectionResponse) {
+        	collection = collectionResponse.resource;
+        
+        	return client.createDocumentAsync(collection._self, documentDefinition);
+    	})
+		.then(function(documentResponse) {
+			var document = documentResponse.resource;
+			console.log('Created Document with content: ', document.content);
+		})
+    	.fail(function(error) {
+        	console.log("An error occured", error);
+    	})}});       
     },
 
     getOrCreateCollection: function (client, databaseLink, collectionId) {
