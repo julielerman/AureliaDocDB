@@ -18,8 +18,9 @@ var DocDBUtils = {
             }]
         };
 
-        client.queryDatabases(querySpec).toArray().then(function(results) {
-         
+//        client.queryDatabases(querySpec).toArray().then(function(results) {
+            client.queryDatabases(querySpec).then(function(results) {
+      
                 if (results.length === 0) {
                     var databaseSpec = {
                         id: databaseId
