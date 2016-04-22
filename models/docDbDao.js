@@ -43,8 +43,7 @@ docDbDao.prototype = {
 
                 ;
             }
-        });
-    },
+      ,
 
     find: function (querySpec, callback) {
         var self = this;
