@@ -22,7 +22,7 @@ var DocDBUtils = {
 
       var deferred = Q.defer();
 
-        client.queryDatabases(querySpec).toArrayAsync().then(function (results) {
+        return client.queryDatabases(querySpec).toArrayAsync().then(function (results) {
             if (results.length === 0) {
                 var databaseSpec = {
                     id: databaseId
@@ -46,10 +46,12 @@ var DocDBUtils = {
                         console.log("An error occured", error);
                     })
             }
+             return results.feed[0];
         }
-       
-        );
- return deferred.promise;    
+      
+        )
+//         deferred.resolve(client);
+// return deferred.promise;    
 },
 
     getOrCreateCollection: function (client, databaseLink, collectionId) {
@@ -62,7 +64,7 @@ var DocDBUtils = {
             }]
         };
 
-        client.queryCollections(databaseLink, querySpec).toArrayAsync().then(function (results) {
+       return client.queryCollections(databaseLink, querySpec).toArrayAsync().then(function (results) {
 
             if (results.length === 0) {
                 var collectionSpec = {
@@ -80,7 +82,7 @@ var DocDBUtils = {
 
             } else {
                 //callback(null, results[0]);
-                return results[0];
+                return results.feed[0];
             }
         },
             function (err) { return err; }

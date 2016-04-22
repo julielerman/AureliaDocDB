@@ -1,4 +1,6 @@
-var DocumentDBClient = require('documentdb').DocumentClient;
+var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
+//var DocumentDBClient = require('documentdb').DocumentClient;
+
 var async = require('async');
 
 function Ninjas(docDbDao) {
@@ -25,14 +27,13 @@ Ninjas.prototype = {
       + q
     };
 
-    self.docDbDao.find(querySpec, function (err, items) {
-      if (err) {
-        // TODO: err handling
-      } else {
-        res.json(items);
-      }
-    })
-  },
+    self.docDbDao.find(querySpec).then(function (items) {
+     
+        return res.json(items);
+      },
+      function(err){return err;}
+    ) }
+ ,
 
 
   getNinja: function (req, res) {

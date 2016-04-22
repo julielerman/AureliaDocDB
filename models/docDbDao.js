@@ -18,12 +18,13 @@ module.exports = docDbDao;
 
 docDbDao.prototype = {
 
-    init: function (callback) {
+    init: function () {
         var self = this;
 
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId).then(function (db) {
+        docdbUtils.getOrCreateDatabase(self.client, self.databaseId)
+        .then(function (db) {
               self.database = db;
-                docdbUtils.getOrCreateCollection(self.client, sel.database._self, self.collectionId)
+                docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId)
                     .then(function (coll) {
                         self.collection = coll;
                     }, function (err) {
@@ -47,18 +48,17 @@ docDbDao.prototype = {
             }
       ,
 
-    find: function (querySpec, callback) {
+    find: function (querySpec) {
         var self = this;
 
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
-            if (err) {
-                callback(err);
-
-            } else {
-                callback(null, results);
-            }
-        });
-    },
+        return self.client.queryDocuments(self.collection._self, querySpec).toArrayAsync()
+        .then(function ( results) {
+          return results.feed;
+            },
+            function(err){
+                return err;}
+        )}
+        ,
 
     addItem: function (item, callback) {
         var self = this;
