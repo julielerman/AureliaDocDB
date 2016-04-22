@@ -1,7 +1,15 @@
 var DocumentDBClient = require('documentdb').DocumentClient;
 
 var DocDBUtils = {
-    getOrCreateDatabase: function (client, databaseId, callback) {
+    
+    //   docdbUtils.getOrCreateCollection(self.client, sel.database._self, self.collectionId)
+    //                 .then(function (coll) {
+    //                     self.collection = coll;
+    //                 }, function (err) {
+    //                     return err;
+    //                 });
+    getOrCreateDatabase: function (client, databaseId) {
+       
         var querySpec = {
             query: 'SELECT * FROM root r WHERE r.id=@id',
             parameters: [{
@@ -10,28 +18,27 @@ var DocDBUtils = {
             }]
         };
 
-        client.queryDatabases(querySpec).toArray(function (err, results) {
-            if (err) {
-                callback(err);
-
-            } else {
+        client.queryDatabases(querySpec).toArray().then(function(results) {
+         
                 if (results.length === 0) {
                     var databaseSpec = {
                         id: databaseId
                     };
 
-                    client.createDatabase(databaseSpec, function (err, created) {
-                        callback(null, created);
+                    client.createDatabase(databaseSpec).then(function (created) {
+                        return created;
                     });
 
                 } else {
-                    callback(null, results[0]);
-                }
-            }
-        });
+                    //callback(null, results[0]);
+                    return results[0];
+        }},function (err){return err;}
+            
+       );
     },
 
-    getOrCreateCollection: function (client, databaseLink, collectionId, callback) {
+    getOrCreateCollection: function (client, databaseLink, collectionId) {
+       
         var querySpec = {
             query: 'SELECT * FROM root r WHERE r.id=@id',
             parameters: [{
@@ -40,11 +47,8 @@ var DocDBUtils = {
             }]
         };             
 
-        client.queryCollections(databaseLink, querySpec).toArray(function (err, results) {
-            if (err) {
-                callback(err);
-
-            } else {        
+        client.queryCollections(databaseLink, querySpec).toArray().then(function ( results) {
+               
                 if (results.length === 0) {
                     var collectionSpec = {
                         id: collectionId
@@ -55,15 +59,17 @@ var DocDBUtils = {
                     };
 
                     client.createCollection(databaseLink, collectionSpec, requestOptions, function (err, created) {
-                        callback(null, created);
+                        //callback(null, created);
+                        return created;
                     });
 
                 } else {
-                    callback(null, results[0]);
+                    //callback(null, results[0]);
+                    return results[0];
                 }
-            }
-        });
-    }
-};
+            },
+            function (err){return err;}
+        );
+    }};
 
 module.exports = DocDBUtils;
