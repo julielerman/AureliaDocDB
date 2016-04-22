@@ -1,4 +1,6 @@
-var DocumentDBClient = require('documentdb').DocumentClient;
+//var DocumentDBClient = require('documentdb').DocumentClient;
+var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
+
 var docdbUtils = require('./docdbUtils');
 
 function docDbDao(documentDBClient, databaseId, collectionId) {
