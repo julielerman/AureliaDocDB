@@ -22,43 +22,45 @@ docDbDao.prototype = {
         var self = this;
 
         docdbUtils.getOrCreateDatabase(self.client, self.databaseId)
-        .then(function (db) {
-              self.database = db;
+            .then(function (db) {
+                self.database = db;
                 docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId)
                     .then(function (coll) {
                         self.collection = coll;
                     }, function (err) {
                         return err;
                     });
-        },
-         function (err) {
-                        return err;
-                    });
-        
-                // docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
-                //     if (err) {
-                //         callback(err);
+            },
+            function (err) {
+                return err;
+            });
 
-                //     } else {
-                //         self.collection = coll;
-                //     }
-                // })
+        // docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
+        //     if (err) {
+        //         callback(err);
 
-                ;
-            }
-      ,
+        //     } else {
+        //         self.collection = coll;
+        //     }
+        // })
+
+        ;
+    }
+    ,
 
     find: function (querySpec) {
         var self = this;
 
         return self.client.queryDocuments(self.collection._self, querySpec).toArrayAsync()
-        .then(function ( results) {
-          return results.feed;
+            .then(function (results) {
+                return results.feed;
             },
-            function(err){
-                return err;}
-        )}
-        ,
+            function (err) {
+                return err;
+            }
+            )
+    }
+    ,
 
     addItem: function (item, callback) {
         var self = this;
@@ -101,7 +103,7 @@ docDbDao.prototype = {
         });
     },
 
-    getItem: function (itemId, callback) {
+    getItem: function (itemId) {
         var self = this;
 
         var querySpec = {
@@ -112,13 +114,13 @@ docDbDao.prototype = {
             }]
         };
 
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
-            if (err) {
-                callback(err);
-
-            } else {
-                callback(null, results[0]);
+        return self.client.queryDocuments(self.collection._self, querySpec).toArrayAsync()
+            .then(function (results) {
+                return results.feed[0];
+            },
+            function (err) {
+                return err;
             }
-        });
+            );
     }
 };

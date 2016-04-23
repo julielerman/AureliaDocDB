@@ -27,7 +27,8 @@ Ninjas.prototype = {
       + q
     };
 
-    self.docDbDao.find(querySpec).then(function (items) {
+    self.docDbDao.find(querySpec)
+       .then(function (items) {
      
         return res.json(items);
       },
@@ -38,13 +39,12 @@ Ninjas.prototype = {
 
   getNinja: function (req, res) {
     var self = this;
-    self.docDbDao.getItem(req.params.id, function (err, items) {
-      if (err) {
-        // TODO: err handling
-      } else {
-        res.json(items);
-      }
-    })
+    self.docDbDao.getItem(req.params.id)
+    .then(function (items) {
+     return res.json(items);
+      },
+      function(err){return err;}
+    )
 
   },
 
