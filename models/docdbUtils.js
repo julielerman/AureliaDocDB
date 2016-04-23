@@ -1,15 +1,8 @@
-//var DocumentDBClient = require('documentdb').DocumentClient;
 var DocumentClient = require('documentdb-q-promises').DocumentClientWrapper
-, Q = require("q");
+    , Q = require("q");
 
 var DocDBUtils = {
 
-    //   docdbUtils.getOrCreateCollection(self.client, sel.database._self, self.collectionId)
-    //                 .then(function (coll) {
-    //                     self.collection = coll;
-    //                 }, function (err) {
-    //                     return err;
-    //                 });
     getOrCreateDatabase: function (client, databaseId) {
 
         var querySpec = {
@@ -20,7 +13,7 @@ var DocDBUtils = {
             }]
         };
 
-      var deferred = Q.defer();
+        var deferred = Q.defer();
 
         return client.queryDatabases(querySpec).toArrayAsync().then(function (results) {
             if (results.length === 0) {
@@ -46,13 +39,12 @@ var DocDBUtils = {
                         console.log("An error occured", error);
                     })
             }
-             return results.feed[0];
+            return results.feed[0];
         }
-      
+
         )
-//         deferred.resolve(client);
-// return deferred.promise;    
-},
+
+    },
 
     getOrCreateCollection: function (client, databaseLink, collectionId) {
 
@@ -64,7 +56,7 @@ var DocDBUtils = {
             }]
         };
 
-       return client.queryCollections(databaseLink, querySpec).toArrayAsync().then(function (results) {
+        return client.queryCollections(databaseLink, querySpec).toArrayAsync().then(function (results) {
 
             if (results.length === 0) {
                 var collectionSpec = {
@@ -76,12 +68,10 @@ var DocDBUtils = {
                 };
 
                 client.createCollection(databaseLink, collectionSpec, requestOptions, function (err, created) {
-                    //callback(null, created);
                     return created;
                 });
 
             } else {
-                //callback(null, results[0]);
                 return results.feed[0];
             }
         },

@@ -1,4 +1,3 @@
-//var DocumentDBClient = require('documentdb').DocumentClient;
 var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
 
 var docdbUtils = require('./docdbUtils');
@@ -34,15 +33,6 @@ docDbDao.prototype = {
             function (err) {
                 return err;
             });
-
-        // docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
-        //     if (err) {
-        //         callback(err);
-
-        //     } else {
-        //         self.collection = coll;
-        //     }
-        // })
 
         ;
     }
@@ -80,28 +70,14 @@ docDbDao.prototype = {
 
     updateItem: function (item) {
         var self = this;
-
-        // return self.getItem(item.Id).then(function (doc) {
-
-        //     doc.Clan = item.Clan;
-        //     doc.Name = item.Name;
-        //     doc.ServedInOniwaban = item.ServedInOniwaban;
-        //     doc.DateOfBirth = item.DateOfBirth;
-        //     doc.DateModified = Date.now();
-
         //replaceDocument was repleced with upsert feature for Node (& other) DocDB SDKs
-        //shouldn''t need to get doc first in order to use _self
-        //var docLink = string.Format("dbs/{0}/colls/{1}/docs/{2}", 
-        // "SalesDb", "Catalog", "prd123");
-        var dbName="Ninjas";
-        var collName="Ninjas";
-        var docLink = "dbs/Ninjas/colls/Ninjas";//+ item.Id;
-          
+        //no longer need to get doc first in order to use _self
+        var docLink = "dbs/Ninjas/colls/Ninjas";
+
         item.DateModified = Date.now();
 
-        //  return self.client.upsertDocumentAsync(doc._self, doc).then(function (replaced) {
+        //upsert takes ID from item. be sure property name is same as db (even casing)
         return self.client.upsertDocumentAsync(docLink, item).then(function (replaced) {
-
             return replaced;
         },
             function (err) {
@@ -109,12 +85,7 @@ docDbDao.prototype = {
             }
         );
     },
-    //     ,
-    //         function (err) {
-    //             return err;
-    //         }
-    //     );
-    // },
+
 
     getItem: function (itemId) {
         var self = this;

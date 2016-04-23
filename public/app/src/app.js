@@ -9,7 +9,6 @@ export class App {
       { route: 'users',         name: 'users',        moduleId: 'users',        nav: true, title:'Github Users' },
       { route: 'ninjaList',         name:  'ninjaList'  ,    moduleId:'ninjaList',            nav: true, title:'Ninjas'},
       { route: 'ninjas/*Id', moduleId: 'edit', title:'Edit Ninja' },
-      // { route: 'ninjas/*Id', moduleId: 'ninjaList', title:'Edit Ninja' },
        { route: 'child-router',  name: 'child-router', moduleId: 'child-router', nav: true, title:'Child Router' }
     ]);
     

@@ -1,5 +1,4 @@
 var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
-//var DocumentDBClient = require('documentdb').DocumentClient;
 
 var async = require('async');
 
