@@ -95,7 +95,7 @@ docDbDao.prototype = {
         // "SalesDb", "Catalog", "prd123");
         var dbName="Ninjas";
         var collName="Ninjas";
-        var docLink = "dbs/Ninjas/colls/Ninjas/docs/"+ item.Id;
+        var docLink = "dbs/Ninjas/colls/Ninjas";//+ item.Id;
           
         item.DateModified = Date.now();
 
