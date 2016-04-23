@@ -81,28 +81,40 @@ docDbDao.prototype = {
     updateItem: function (item) {
         var self = this;
 
-        return self.getItem(item.Id).then(function (doc) {
+        // return self.getItem(item.Id).then(function (doc) {
 
-            doc.Clan = item.Clan;
-            doc.Name = item.Name;
-            doc.ServedInOniwaban = item.ServedInOniwaban;
-            doc.DateOfBirth = item.DateOfBirth;
-            doc.DateModified = Date.now();
+        //     doc.Clan = item.Clan;
+        //     doc.Name = item.Name;
+        //     doc.ServedInOniwaban = item.ServedInOniwaban;
+        //     doc.DateOfBirth = item.DateOfBirth;
+        //     doc.DateModified = Date.now();
 
-            //replaceDocument was repleced with upsert feature for Node (& other) DocDB SDKs
-            return self.client.upsertDocumentAsync(doc._self, doc).then(function (replaced) {
-                return replaced;
-            },
-                function (err) {
-                    return err;
-                }
-            );
+        //replaceDocument was repleced with upsert feature for Node (& other) DocDB SDKs
+        //shouldn''t need to get doc first in order to use _self
+        //var docLink = string.Format("dbs/{0}/colls/{1}/docs/{2}", 
+        // "SalesDb", "Catalog", "prd123");
+        var dbName="Ninjas";
+        var collName="Ninjas";
+        var docLink = "dbs/Ninjas/colls/Ninjas/docs/"+ item.Id;
+          
+        item.DateModified = Date.now();
+
+        //  return self.client.upsertDocumentAsync(doc._self, doc).then(function (replaced) {
+        return self.client.upsertDocumentAsync(docLink, item).then(function (replaced) {
+
+            return replaced;
         },
             function (err) {
                 return err;
             }
         );
     },
+    //     ,
+    //         function (err) {
+    //             return err;
+    //         }
+    //     );
+    // },
 
     getItem: function (itemId) {
         var self = this;
