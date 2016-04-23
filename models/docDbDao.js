@@ -78,29 +78,30 @@ docDbDao.prototype = {
         });
     },
 
-    updateItem: function (item, callback) {
+    updateItem: function (item) {
         var self = this;
 
-        self.getItem(item.Id, function (err, doc) {
-            if (err) {
-                callback(err);
+        return self.getItem(item.Id).then(function (doc) {
 
-            } else {
-                doc.Clan = item.Clan;
-                doc.Name = item.Name;
-                doc.ServedInOniwaban = item.ServedInOniwaban;
-                doc.DateOfBirth = item.DateOfBirth;
-                doc.DateModified = Date.now();
-                self.client.replaceDocument(doc._self, doc, function (err, replaced) {
-                    if (err) {
-                        callback(err);
+            doc.Clan = item.Clan;
+            doc.Name = item.Name;
+            doc.ServedInOniwaban = item.ServedInOniwaban;
+            doc.DateOfBirth = item.DateOfBirth;
+            doc.DateModified = Date.now();
 
-                    } else {
-                        callback(null, replaced);
-                    }
-                });
+            //replaceDocument was repleced with upsert feature for Node (& other) DocDB SDKs
+            return self.client.upsertDocumentAsync(doc._self, doc).then(function (replaced) {
+                return replaced;
+            },
+                function (err) {
+                    return err;
+                }
+            );
+        },
+            function (err) {
+                return err;
             }
-        });
+        );
     },
 
     getItem: function (itemId) {

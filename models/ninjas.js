@@ -53,13 +53,15 @@ Ninjas.prototype = {
   updateDetails: function (req, res) {
     var self = this;
     var ninja = req.body;
-    self.docDbDao.updateItem(ninja, function (err) {
-      if (err) {
-        throw (err);
-      } else {
-        res.send(200);
-      }
-    })
+    self.docDbDao.updateItem(ninja).then( function () {
+      
+       //deprecated: res.send(200);
+       res.status(200).end();
+      },
+            function (err) {
+                return err;
+            }
+    )
   },
 
 
