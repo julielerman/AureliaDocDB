@@ -1,7 +1,10 @@
-var DocumentDBClient = require('documentdb').DocumentClient;
+var DocumentClient = require('documentdb-q-promises').DocumentClientWrapper
+    , Q = require("q");
 
 var DocDBUtils = {
-    getOrCreateDatabase: function (client, databaseId, callback) {
+
+    getOrCreateDatabase: function (client, databaseId) {
+
         var querySpec = {
             query: 'SELECT * FROM root r WHERE r.id=@id',
             parameters: [{
@@ -10,59 +13,70 @@ var DocDBUtils = {
             }]
         };
 
-        client.queryDatabases(querySpec).toArray(function (err, results) {
-            if (err) {
-                callback(err);
+        var deferred = Q.defer();
 
-            } else {
-                if (results.length === 0) {
-                    var databaseSpec = {
-                        id: databaseId
-                    };
+        return client.queryDatabases(querySpec).toArrayAsync().then(function (results) {
+            if (results.length === 0) {
+                var databaseSpec = {
+                    id: databaseId
+                };
 
-                    client.createDatabase(databaseSpec, function (err, created) {
-                        callback(null, created);
-                    });
+                client.createDatabaseAsync(databaseDefinition)
+                    .then(function (databaseResponse) {
+                        database = databaseResponse.resource;
+                        return client.createCollectionAsync(database._self, collectionDefinition);
+                    })
+                    .then(function (collectionResponse) {
+                        collection = collectionResponse.resource;
 
-                } else {
-                    callback(null, results[0]);
-                }
+                        return client.createDocumentAsync(collection._self, documentDefinition);
+                    })
+                    .then(function (documentResponse) {
+                        var document = documentResponse.resource;
+                        console.log('Created Document with content: ', document.content);
+                    })
+                    .fail(function (error) {
+                        console.log("An error occured", error);
+                    })
             }
-        });
+            return results.feed[0];
+        }
+
+        )
+
     },
 
-    getOrCreateCollection: function (client, databaseLink, collectionId, callback) {
+    getOrCreateCollection: function (client, databaseLink, collectionId) {
+
         var querySpec = {
             query: 'SELECT * FROM root r WHERE r.id=@id',
             parameters: [{
                 name: '@id',
                 value: collectionId
             }]
-        };             
+        };
 
-        client.queryCollections(databaseLink, querySpec).toArray(function (err, results) {
-            if (err) {
-                callback(err);
+        return client.queryCollections(databaseLink, querySpec).toArrayAsync().then(function (results) {
 
-            } else {        
-                if (results.length === 0) {
-                    var collectionSpec = {
-                        id: collectionId
-                    };
+            if (results.length === 0) {
+                var collectionSpec = {
+                    id: collectionId
+                };
 
-                    var requestOptions = {
-                        offerType: 'S1'
-                    };
+                var requestOptions = {
+                    offerType: 'S1'
+                };
 
-                    client.createCollection(databaseLink, collectionSpec, requestOptions, function (err, created) {
-                        callback(null, created);
-                    });
+                client.createCollection(databaseLink, collectionSpec, requestOptions, function (err, created) {
+                    return created;
+                });
 
-                } else {
-                    callback(null, results[0]);
-                }
+            } else {
+                return results.feed[0];
             }
-        });
+        },
+            function (err) { return err; }
+        );
     }
 };
 

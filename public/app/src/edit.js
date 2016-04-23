@@ -35,7 +35,7 @@ export class Edit {
 
   save() {
     this.ninjaRoot = {
-      Id: this.ninja.id,
+      id: this.ninja.id,
       ServedInOniwaban: this.ninja.ServedInOniwaban,
       Clan: this.ninja.Clan,
       Name: this.ninja.Name,
