@@ -17,28 +17,14 @@ module.exports = docDbDao;
 
 docDbDao.prototype = {
 
-<<<<<<< HEAD
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db,callback) {
-            if (err) {
-                callback(err);
-=======
     init: function () {
         var self = this;
->>>>>>> JuliePrivateWithKeys
 
         docdbUtils.getOrCreateDatabase(self.client, self.databaseId)
             .then(function (db) {
                 self.database = db;
-<<<<<<< HEAD
-                docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll,callback) {
-                    if (err) {
-                        callback(err);
-
-                    } else {
-=======
                 docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId)
                     .then(function (coll) {
->>>>>>> JuliePrivateWithKeys
                         self.collection = coll;
                     }, function (err) {
                         return err;
@@ -55,21 +41,12 @@ docDbDao.prototype = {
     find: function (querySpec) {
         var self = this;
 
-<<<<<<< HEAD
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results,callback) {
-            if (err) {
-                callback(err);
-
-            } else {
-                callback(null, results);
-=======
         return self.client.queryDocuments(self.collection._self, querySpec).toArrayAsync()
             .then(function (results) {
                 return results.feed;
             },
             function (err) {
                 return err;
->>>>>>> JuliePrivateWithKeys
             }
             )
     }
@@ -81,7 +58,7 @@ docDbDao.prototype = {
         item.date = Date.now();
         item.completed = false;
 
-        self.client.createDocument(self.collection._self, item, function (err, doc,callback) {
+        self.client.createDocument(self.collection._self, item, function (err, doc) {
             if (err) {
                 callback(err);
 
