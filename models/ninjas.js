@@ -17,34 +17,37 @@ Ninjas.prototype = {
   getNinjas: function (req, res) {
     var self = this;
     var q = '';
-    if (req.query.q != "undefined" && req.query.q > "") {
-      q = ' WHERE CONTAINS(ninja.Name,"' + req.query.q + '")';
-    }
-
     var querySpec = {
       query:
       'SELECT ninja.id, ninja.Name,ninja.ServedInOniwaban,ninja.DateOfBirth FROM ninja'
-      + q
     };
 
+    if (req.query.q != "undefined" && req.query.q > "") {
+      querySpec.query += " WHERE CONTAINS(ninja.Name, @namepart)";
+      querySpec.parameters = [{
+        name: '@namepart',
+        value: req.query.q
+      }]
+    }
+
     self.docDbDao.find(querySpec)
-       .then(function (items) {
-     
+      .then(function (items) {
         return res.json(items);
       },
-      function(err){return err;}
-    ) }
- ,
+      function (err) { return err; }
+      )
+  }
+  ,
 
 
   getNinja: function (req, res) {
     var self = this;
     self.docDbDao.getItem(req.params.id)
-    .then(function (items) {
-     return res.json(items);
+      .then(function (items) {
+        return res.json(items);
       },
-      function(err){return err;}
-    )
+      function (err) { return err; }
+      )
 
   },
 
@@ -53,14 +56,14 @@ Ninjas.prototype = {
   updateDetails: function (req, res) {
     var self = this;
     var ninja = req.body;
-    self.docDbDao.updateItem(ninja).then( function () {
-      
-       //deprecated: res.send(200);
-       res.status(200).end();
-      },
-            function (err) {
-                return err;
-            }
+    self.docDbDao.updateItem(ninja).then(function () {
+
+      //deprecated: res.send(200);
+      res.status(200).end();
+    },
+      function (err) {
+        return err;
+      }
     )
   },
 
