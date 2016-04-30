@@ -13,9 +13,7 @@ var DocDBUtils = {
             }]
         };
 
-        var deferred = Q.defer();
-
-        return client.queryDatabases(querySpec).toArrayAsync().then(function (results) {
+         return client.queryDatabases(querySpec).toArrayAsync().then(function (results) {
             if (results.length === 0) {
                 var databaseSpec = {
                     id: databaseId
@@ -40,9 +38,9 @@ var DocDBUtils = {
                     })
             }
             return results.feed[0];
-        }
-
-        )
+        },
+            function (err) { return err; }
+        );    
 
     },
 
