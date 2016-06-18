@@ -1,5 +1,8 @@
 Sample Solution to Accompany:  
 __Aurelia Meets DocumentDB: A Matchmaker’s Journey Part 2__  
+April 2016:  
+I've updated the various packages and SDKs for node, Aurelia and DocumentDB. Major changes to the app include replacing all callbacks with promises (using the Q promises wrapper for DocumentDb (https://github.com/Azure/azure-documentdb-node-q) and leveraging newer features of DocumentDB such as parameterized queries, upsert and not needing to retrieve a self-linking ID in order to do other commands on the database.  
+
 December 2015 MSDN Magazine Data Points Column  
 http://msdn.microsoft.com/en-us/magazine/mt595750  
 by Julie Lerman  
