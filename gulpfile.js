@@ -38,6 +38,8 @@ var compilerOptions = {
 
 var jshintConfig = {esnext:true};
 
+gulp.task('default', ['watch']);
+
 gulp.task('clean', function() {
  return gulp.src([path.output])
     .pipe(vinylPaths(del));
