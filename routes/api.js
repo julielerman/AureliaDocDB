@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 //var DocumentDBClient = require('documentdb').DocumentClient;
-var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
+//var DocumentDBClient = require('documentdb-q-promises').DocumentClientWrapper;
+const DocumentDBClient = require("documentdb-typescript");
 
 var config = require('../config');
 var Ninjas = require('../models/ninjas.js');
